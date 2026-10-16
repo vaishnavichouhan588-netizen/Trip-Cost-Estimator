@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip cost estimator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page">
+  <p class="eyebrow">Trip planning · instant estimate</p>
+  <h1>Plan Your Trip Budget in Seconds</h1>
+  <p class="sub">Get an instant estimate for flights, hotels, food, local transport,
+visa costs, and seasonal pricing trends before you book.</p>
+    <div class="steps">
+
+  <div class="step active">
+     📍 Destination
+  </div>
+
+  <div class="step active">
+     📅 Dates
+  </div>
+
+  <div class="step active">
+     👤 Travelers
+  </div>
+
+  <div class="step active">
+     💰 Estimate
+  </div>
+
+</div>
+   <div id="weatherBox" class="weather-box">
+   <div class="spinner"></div>
+  </div>
+   <div class="destination-banner">
+  <img
+    id="destinationImage"
+    src="https://images.unsplash.com/photo-1537996194471-e657df975ab4"
+    alt="Destination"
+  >
+</div>
+  <div class="ticket">
+    <div class="ticket-head">
+      <p class="eyebrow" style="margin:0;">Trip estimate</p>
+      <div class="ticket-no" id="ticketNo">NO. 000000</div>
+    </div>
+
+    <div class="field-row three">
+      <div class="field">
+        <label for="origin">Flying from (country)</label>
+        <select id="origin">
+          <option value="India" selected>India</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="United States">United States</option>
+          <option value="Canada">Canada</option>
+          <option value="Australia">Australia</option>
+          <option value="UAE/GCC">UAE / GCC</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="originCity">Flying from (city)</label>
+        <select id="originCity"></select>
+      </div>
+      <div class="field" style="border-right:none;">
+        <label for="destination">Destination</label>
+        <select id="destination">
+          <option value="Bali, Indonesia" selected>Bali, Indonesia</option>
+          <option value="Goa, India">Goa, India</option>
+          <option value="Bangkok, Thailand">Bangkok, Thailand</option>
+          <option value="Dubai, UAE">Dubai, UAE</option>
+          <option value="Maldives">Maldives</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Ho Chi Minh City, Vietnam">Ho Chi Minh City, Vietnam</option>
+          <option value="Colombo, Sri Lanka">Colombo, Sri Lanka</option>
+          <option value="Paris, France">Paris, France</option>
+          <option value="New York, USA">New York, USA</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="startDate">Departure date</label>
+        <input type="date" id="startDate" />
+      </div>
+      <div class="field" style="border-right:none;">
+        <label for="endDate">Return date</label>
+        <input type="date" id="endDate" />
+      </div>
+    </div>
+
+    <div class="field-row three">
+      <div class="field">
+        <label for="travelerType">Type of traveler</label>
+        <select id="travelerType">
+          <option value="solo">Solo traveller</option>
+          <option value="couple" selected>Couple</option>
+          <option value="group">Group</option>
+          <option value="senior">Senior citizen</option>
+          <option value="female">Female only group</option>
+          <option value="male">Male only group</option>
+        </select>
+      </div>
+      <div class="field" id="groupSizeField" style="display:none;">
+        <label for="groupSize">Number of travelers</label>
+        <input type="number" id="groupSize" value="4" min="2" max="20" step="1" />
+      </div>
+      <div class="field" id="currencyField">
+        <label for="currency">Currency</label>
+        <select id="currency">
+          <option value="USD" selected>USD — US dollar</option>
+          <option value="INR">INR — Indian rupee</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="GBP">GBP — British pound</option>
+          <option value="CAD">CAD — Canadian dollar</option>
+          <option value="AUD">AUD — Australian dollar</option>
+          <option value="AED">AED — UAE dirham</option>
+          <option value="THB">THB — Thai baht</option>
+          <option value="IDR">IDR — Indonesian rupiah</option>
+          <option value="JPY">JPY — Japanese yen</option>
+          <option value="SGD">SGD — Singapore dollar</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field" style="border-right:none;">
+        <label for="tripType">Trip type</label>
+        <div class="stars" id="tripType">
+          <button type="button" class="pill-btn" data-type="budget">Budget</button>
+          <button type="button" class="pill-btn active" data-type="standard">Standard</button>
+          <button type="button" class="pill-btn" data-type="premium">Premium</button>
+          <button type="button" class="pill-btn" data-type="luxury">Luxury</button>
+        </div>
+        <p class="hint" id="tripTypeHint">Standard sets economy flights and mid-range comfort. Change accommodation and transport below anytime.</p>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="starRating">Accommodation rating</label>
+        <div class="stars" id="starRating">
+          <button type="button" class="star-btn" data-star="1">1</button>
+          <button type="button" class="star-btn" data-star="2">2</button>
+          <button type="button" class="star-btn active" data-star="3">3</button>
+          <button type="button" class="star-btn" data-star="4">4</button>
+          <button type="button" class="star-btn" data-star="5">5</button>
+        </div>
+        <p class="hint">Star rating of hotel</p>
+      </div>
+      <div class="field">
+        <label for="transportMode">Mode of local transport</label>
+        <select id="transportMode">
+          <option value="privateCar">Private car</option>
+          <option value="taxi" selected>Taxi / cab</option>
+          <option value="shuttle">Shuttle bus</option>
+          <option value="transit">Public transit</option>
+          <option value="scooter">Rental scooter / bike</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="perforation"></div>
+
+    <p class="stub-label">Estimated cost breakdown</p>
+    <p class="disclaimer" id="rateNote">Prices are estimated from typical market rates for this destination and season — not a live Skyscanner or hotel-site quote yet. Connecting real-time flight and hotel APIs is the next step once this estimate is validated with users.</p>
+
+    <div class="breakdown">
+      <div class="breakdown-row">
+        <span class="label"><span class="icon amber"><span class="material-icons">flight</span></span>Flights, round trip · <span id="paxLabel">2 travelers</span></span>
+        <span class="value" id="rowFlights">-</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label"><span class="icon"><span class="material-icons">hotel</span></span>Accommodation · <span id="nightsLabel">0 nights</span></span>
+        <span class="value" id="rowStay">-</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label"><span class="icon">&#127860;</span>Food and dining</span>
+        <span class="value" id="rowFood">-</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label"><span class="icon">&#128663;</span>Local transport · <span id="modeLabel">Taxi</span></span>
+        <span class="value" id="rowTransport">-</span>
+      </div>
+      <div class="breakdown-row">
+        <span class="label"><span class="icon">&#128196;</span>Visa fee · <span id="visaPaxLabel">2 travelers</span></span>
+        <span class="value" id="rowVisa">-</span>
+      </div>
+    </div>
+    <p class="disclaimer" style="margin:0 28px 16px;">Visa fees are approximate and depend on your exact passport and current policy — confirm with the destination's official immigration site or an embassy before booking.</p>
+
+    <div class="perforation"></div>
+
+    <div class="totals">
+      <div>
+        <p class="stat-label">Tentative total</p>
+        <p class="stat-value hero" id="totalCost">-</p>
+      </div>
+      <div>
+        <p class="stat-label">Per person</p>
+        <p class="stat-value" id="perPerson">-</p>
+      </div>
+      <div>
+        <p class="stat-label">Per day, group</p>
+        <p class="stat-value" id="perDay">-</p>
+      </div>
+      <div class="barcode" id="barcode"></div>
+    </div>
+
+    <div class="perforation"></div>
+
+    <p class="stub-label">When to travel for the best price</p>
+    <div class="trend" id="trendBlock">
+      <div class="trend-bars" id="trendBars"></div>
+      <p class="trend-note" id="trendNote">Loading price trend…</p>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
